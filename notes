@@ -1,0 +1,25 @@
+Window::maxx() should probably be max_x(), but it is inconsistent with Curses.lines and Curses.cols, should it be cols/lines or x/y?
+
+Build curses with wide character support (ncursesw):
+gem install curses -verbose -- --with-cflags=-I$(brew --prefix)/opt/ncurses/include --with-ldflags=-L$(brew --prefix)/opt/ncurses/lib
+bundle config build.curses --with-cflags="-I$(brew --prefix)/opt/ncurses/include" --with-ldflags="-L$(brew --prefix)/opt/ncurses/lib"
+
+Gem output:
+gem install --verbose
+/Users/kaspergrubbe/.rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/extensions/x86_64-darwin-16/2.5.0-static/curses-1.2.4/gem_make.out
+
+# https://stac47.github.io/ruby/curses/tutorial/2014/01/21/ruby-and-curses-tutorial.html
+# http://ruby-doc.org/stdlib-2.0.0/libdoc/curses/rdoc/Curses/
+# http://ruby-doc.org/stdlib-2.0.0/libdoc/curses/rdoc/Curses/Window.html
+
+# def onsig(signal)
+#   Curses.close_screen
+#   exit signal
+# end
+
+# %w[HUP INT QUIT TERM].each do |sig|
+#   unless trap(sig, "IGNORE") == "IGNORE"  # previous handler
+#     trap(sig) {|s| onsig(s) }
+#   end
+# end
+

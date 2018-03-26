@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+require 'curses'
+require 'virtma'
+
+unless Process.uid == 0
+  puts "You need to be root, sorry!"
+  exit
+end
+
+begin
+  Curses.init_screen
+
+  # Init colors
+  if Curses.has_colors?
+    Curses.start_color
+    Curses.use_default_colors
+    (0..Curses.colors).each do |i|
+      Curses.init_pair(i + 1, i, -1)
+    end
+  end
+
+  Curses.nonl
+  Curses.noecho # don't echo keys entered
+  Curses.curs_set(0) # invisible cursor
+
+  win = Curses::Window.new(Curses.lines, Curses.cols, 0, 0)
+  win.keypad = true # Enable arrow-keys, and other "meta keys" in the Curses::Key-namespace
+
+  win.nodelay = true
+  win.timeout = 25
+
+  window_manager = Virtma::WindowManager.new([
+    Virtma::Screens::VmScreen.new,
+    Virtma::Screens::UsbScreen.new,
+    Virtma::Screens::RunScreen.new,
+  ])
+  window_manager.redraw(win)
+
+  while(true)
+    current_window = window_manager.active_window
+
+    case win.getch
+    when Curses::Key::UP
+      window_manager.active_window.up
+    when Curses::Key::DOWN
+      window_manager.active_window.down
+    when Curses::Key::RIGHT
+      window_manager.next_window
+    when Curses::Key::LEFT
+      window_manager.previous_window
+    when ' ', Curses::Key::ENTER
+      window_manager.active_window.toggle
+    when Curses::Key::RESIZE
+      window_manager.redraw(win)
+    when 'q'
+      break
+      exit(0)
+    end
+
+    window_manager.redraw(win) if window_manager.active_window.changed? || window_manager.active_window != current_window
+  end
+
+  win.close
+ensure
+  Curses.close_screen
+end
+
+
