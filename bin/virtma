@@ -1,6 +1,15 @@
 #!/usr/bin/env ruby
 require 'curses'
 require 'virtma'
+require 'optparse'
+
+@options = {}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: virtma [options]'
+  opts.on('-d', '--debug', 'Run with debug-mode enabled') do |v|
+    @options[:debug] = v
+  end
+end.parse!
 
 unless Process.uid == 0
   puts 'You need to be root, sorry!'
