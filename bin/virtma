@@ -62,6 +62,11 @@ begin
       window_manager.active_window.toggle
     when Curses::Key::RESIZE
       window_manager.redraw(win)
+    when 'p'
+      if @options[:debug]
+        require 'pry-remote';
+        binding.remote_pry;
+      end
     when 'q'
       break
       exit(0)
