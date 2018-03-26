@@ -3,7 +3,8 @@ require 'curses'
 require 'virtma'
 
 unless Process.uid == 0
-  puts "You need to be root, sorry!"
+  puts 'You need to be root, sorry!'
+  puts '(Psssst! Try using sudo)'
   exit
 end
 

@@ -26,7 +26,7 @@ module Virtma
       window.clear
 
       window.setpos(0,2)
-      window.addstr("Vfio.rb")
+      window.addstr("Virtma.rb")
 
       @active_window.render(window)
 
@@ -46,8 +46,6 @@ module Virtma
 
         menu_x += menu_title.size
       end
-
-      #window.refresh
     end
 
     private
