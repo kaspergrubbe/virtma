@@ -9,6 +9,9 @@ OptionParser.new do |opts|
   opts.on('-d', '--debug', 'Run with debug-mode enabled') do |v|
     @options[:debug] = v
   end
+  opts.on('-f', '--fps', 'Show FPS overlay') do |v|
+    @options[:fps_overlay] = v
+  end
 end.parse!
 
 unless Process.uid == 0
@@ -46,9 +49,18 @@ begin
   ])
   window_manager.redraw(win)
 
-  while(true)
-    current_window = window_manager.active_window
+  fps = Hash.new(0)
 
+  while(true)
+    if @options[:fps_overlay]
+      last_second_fps = "%03d" % fps[(Time.now-1).to_s]
+
+      win.setpos(0, win.maxx-4-3-2)
+      win.addstr("FPS:#{last_second_fps}")
+      fps[Time.now.to_s] += 1
+    end
+
+    current_window = window_manager.active_window
     case win.getch
     when Curses::Key::UP
       window_manager.active_window.up
