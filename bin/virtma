@@ -2,10 +2,36 @@
 require 'curses'
 require 'virtma'
 require 'optparse'
+require 'json'
 
 @options = {}
 OptionParser.new do |opts|
   opts.banner = 'Usage: virtma [options]'
+  opts.on('-c', '--config FILE', String, 'Link to config file') do |v|
+    # READ THE CONFIG
+    begin
+      config_json = JSON.parse(File.read(v))['commands']
+      raise 'No commands detected in configuration-file' if config_json.nil?
+    rescue JSON::ParserError
+      raise "JSON parse error"
+    rescue Errno::ENOENT
+      raise "Config file not found"
+    rescue => e
+      raise e
+    end
+
+    # PARSE THE CONFIG
+    setup   = config_json['setup']
+    command = config_json['command']
+    cleanup = config_json['cleanup']
+    raise "No command in configuration-file" if command.nil?
+
+    @options[:configuration] = {
+      setup:   config_json['setup'],
+      command: config_json['command'],
+      cleanup: config_json['cleanup'],
+    }
+  end
   opts.on('-d', '--debug', 'Run with debug-mode enabled') do |v|
     @options[:debug] = v
   end
