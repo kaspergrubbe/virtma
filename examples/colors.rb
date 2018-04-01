@@ -28,6 +28,10 @@ begin
     win.attroff(Curses.color_pair(i))
   end
 
+  # if can_change_color()
+  #   init_color(COLOR_RED, 1000, 0, 0);
+  # end
+
   win.getch
 
   win.close
