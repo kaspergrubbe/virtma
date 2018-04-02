@@ -40,6 +40,8 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+@options.freeze
+
 unless Process.uid == 0
   puts 'You need to be root, sorry!'
   puts '(Psssst! Try using sudo)'
@@ -68,7 +70,7 @@ begin
   win.nodelay = true
   win.timeout = 25
 
-  window_manager = Virtma::WindowManager.new([
+  window_manager = Virtma::WindowManager.new(@options, [
     Virtma::Screens::VmScreen.new,
     Virtma::Screens::UsbScreen.new,
     Virtma::Screens::RunScreen.new,

@@ -4,9 +4,11 @@ module Virtma
   class WindowManager
     attr_reader :active_window, :screens
 
-    def initialize(screens)
-      @screens       = screens
+    def initialize(options, screens)
+      @options = options
+      @screens = screens
       @screens.each do |screen|
+        screen.options        = options
         screen.window_manager = self
       end
       @active_window = @screens.first

@@ -1,12 +1,13 @@
 module Virtma
   module Screens
     class BaseScreen
-      attr_accessor :window_manager
+      attr_accessor :window_manager, :options
 
       def initialize
         @changed = false
         @focused = false
         @window_manager = nil
+        @options = nil
       end
 
       def menu_title
