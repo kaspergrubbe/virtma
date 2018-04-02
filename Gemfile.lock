@@ -1,0 +1,51 @@
+PATH
+  remote: .
+  specs:
+    virtma (0.1.0)
+      childprocess
+      curses
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    childprocess (0.9.0)
+      ffi (~> 1.0, >= 1.0.11)
+    coderay (1.1.2)
+    curses (1.2.4)
+    diff-lcs (1.3)
+    ffi (1.9.23)
+    method_source (0.9.0)
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
+    rake (10.5.0)
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
+    rspec-core (3.7.1)
+      rspec-support (~> 3.7.0)
+    rspec-expectations (3.7.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.7.0)
+    rspec-mocks (3.7.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.7.0)
+    rspec-support (3.7.1)
+    slop (3.6.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.16)
+  pry-remote
+  rake (~> 10.0)
+  rspec (~> 3.0)
+  virtma!
+
+BUNDLED WITH
+   1.16.1
