@@ -11,6 +11,7 @@ gem install --verbose
 # https://stac47.github.io/ruby/curses/tutorial/2014/01/21/ruby-and-curses-tutorial.html
 # http://ruby-doc.org/stdlib-2.0.0/libdoc/curses/rdoc/Curses/
 # http://ruby-doc.org/stdlib-2.0.0/libdoc/curses/rdoc/Curses/Window.html
+# http://webcache.googleusercontent.com/search?q=cache:1PX6hoZCDu0J:www.cs.ukzn.ac.za/~hughm/os/notes/ncurses.html+&cd=7&hl=en&ct=clnk&gl=uk
 
 # def onsig(signal)
 #   Curses.close_screen
