@@ -22,7 +22,7 @@ begin
     Curses.init_pair(i + 1, i, -1)
   end
 
-  (0..255).each do |i|
+  (0..Curses.colors).each do |i|
     win.attron(Curses.color_pair(i))
     win.addstr(i.to_s)
     win.attroff(Curses.color_pair(i))
