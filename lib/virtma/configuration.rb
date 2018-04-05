@@ -3,13 +3,14 @@
 # c = Configuration.new.setup!(path)
 
 class Configuration
-  attr_reader :setup, :command, :cleanup, :zvols
+  attr_reader :setup, :command, :cleanup, :zvols, :usb_devices
 
   def initialize
-    @setup   = nil
-    @command = nil
-    @cleanup = nil
-    @zvols   = []
+    @setup       = nil
+    @command     = nil
+    @cleanup     = nil
+    @zvols       = []
+    @usb_devices = []
   end
 
   def set_setup(setup)
@@ -26,6 +27,10 @@ class Configuration
 
   def zvol(name, location)
     @zvols << [name, location]
+  end
+
+  def usb_device(name, usb_address, enabled)
+    @usb_devices << [name, usb_address, enabled]
   end
 
   def setup!(path)
