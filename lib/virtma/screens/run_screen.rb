@@ -82,7 +82,7 @@ module Virtma::Screens
         end
       else
         @process_pipe, wr = IO.pipe
-        @process = ChildProcess.build('ruby', 'test.rb')
+        @process = ChildProcess.build('ruby', 'examples/ruby_loop.rb')
         @process.io.stdout = wr
         @process.start
         wr.close
