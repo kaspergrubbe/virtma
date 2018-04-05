@@ -82,8 +82,10 @@ module Virtma::Screens
           write_log("Process #{@process.pid} dead !")
         end
       else
+        compile_command
+
         @process_pipe, wr = IO.pipe
-        @process = ChildProcess.build('ruby', 'examples/ruby_loop.rb')
+        @process = ChildProcess.build(compile_command)
         @process.io.stdout = wr
         @process.start
         wr.close
@@ -111,36 +113,17 @@ module Virtma::Screens
 
     def compile_command
       usb_lines = active_usb_devices.map do |usb_device|
-        " -usb -usbdevice host:#{usb_device.address} \\"
+        "-usb -usbdevice host:#{usb_device.address}"
       end.join("\n")
 
+      drive_line = "-drive id=disk0,file=#{active_vm.disk_location},if=virtio,format=raw,cache=none"
+
       command = <<~EOF
-       qemu-system-x86_64 \\
-        -M q35 \\
-        -serial none \\
-        -parallel none \\
-        -nodefaults \\
-        -nodefconfig \\
-        -enable-kvm \\
-        -name Windows \\
-        -cpu host,kvm=off,check,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,hv_vendor_id=blarg \\
-        -smp sockets=1,cores=2,threads=2 \\
-        -m 24576 \\
-        -rtc base=localtime,driftfix=slew -global kvm-pit.lost_tick_policy=delay -no-hpet \\
-        -nographic \\
-        -device vfio-pci,host=01:00.0,multifunction=on \\
-        -device vfio-pci,host=01:00.1 \\
-        -device vfio-pci,host=00:1f.6 \\
-        -vga none \\
-       #{usb_lines}
-        -device virtio-scsi-pci,id=scsi \\
-        -bios /usr/share/edk2.git/ovmf-x64/OVMF-pure-efi.fd \\
-        -drive id=disk0,file=#{active_vm.disk_location},if=virtio,format=raw,cache=none \\
-        -monitor stdio \\
-        -drive file=/data/OSs/Win10_1709_EnglishInternational_x64.iso,id=isocd,index=0,format=raw,if=none \\
-        -device scsi-cd,drive=isocd \\
-        -cdrom /data/VMs/virtio-win-0.1.126.iso \\
+        #{@options[:configuration].command}
+        #{drive_line}
+        #{usb_lines}
       EOF
+      command.squeeze("\n").split("\n").join(" ")
     end
   end
 end
