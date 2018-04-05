@@ -66,7 +66,7 @@ module Virtma::Screens
     def toggle
       super
 
-      if @process && @process.alive?
+      if @process
         begin
           write_log("Trying to kill nicely")
           @process.poll_for_exit(15)
@@ -78,7 +78,7 @@ module Virtma::Screens
         if @process.alive?
           write_log("Process #{@process.pid} _NOT_ killed!")
         else
-          write_log("Process #{@process.pid} KILLED!")
+          write_log("Process #{@process.pid} dead !")
         end
       else
         @process_pipe, wr = IO.pipe
