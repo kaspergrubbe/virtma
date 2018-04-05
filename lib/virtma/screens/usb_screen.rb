@@ -7,16 +7,9 @@ module Virtma::Screens
 
       @position = 0
       @usb_devices = [].tap do |it|
-        it << UsbDevice.new('Mouse', '1038:1361', true)
-        it << UsbDevice.new('Logitech Keyboard K120', '046d:c31c', true)
-        it << UsbDevice.new('Steelseries headset','1038:1211', true)
-        it << UsbDevice.new('Anker USB-hub', '0bda:5411', false)
-        it << UsbDevice.new('USB ethernet', '0b95:1790', false)
-        it << UsbDevice.new('Taranis', '0483:5710', false)
-        it << UsbDevice.new('RX Usb for Taranis', '0451:16a5', false)
-        it << UsbDevice.new('Apple, Inc. Ethernet Adapter [A1277]', '05ac:1402', false)
-        it << UsbDevice.new('Xbox 360 controller', '045e:028e', false)
-        it << UsbDevice.new('RØDE Microphone', '19f7:0003', false)
+        @options[:configuration].usb_devices.each do |name, usb_address, enabled|
+          it << UsbDevice.new(name, usb_address, enabled)
+        end
       end
     end
 
