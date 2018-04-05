@@ -2,7 +2,7 @@ module Virtma::Screens
   class UsbScreen < BaseScreen
     UsbDevice = Struct.new(:name, :address, :toggled)
 
-    def initialize
+    def initialize(options)
       super
 
       @position = 0

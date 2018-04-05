@@ -2,13 +2,16 @@ module Virtma::Screens
   class VmScreen < BaseScreen
     VM = Struct.new(:name, :disk_location, :toggled)
 
-    def initialize
+    def initialize(options)
+      super
+
       @position = 0
-      @vms = [
-        VM.new('Steam', '/dev/zvol/tank/steamdisk', false),
-        VM.new('Creative', '/dev/zvol/tank/creativedisk', false),
-        VM.new('Black and white 2', '/data/VMs/black_and_white2/qemu_vm.raw', false),
-      ]
+
+      @vms = [].tap do |it|
+        @options[:configuration].zvols.each do |name, location|
+          it << VM.new(name, location, false)
+        end
+      end
 
       # Default the first one to be toggled
       @vms.first.toggled = true

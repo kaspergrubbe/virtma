@@ -2,7 +2,9 @@ require 'childprocess'
 
 module Virtma::Screens
   class RunScreen < BaseScreen
-    def initialize()
+    def initialize(options)
+      super
+
       @process      = nil
       @process_log  = []
       @process_pipe = nil

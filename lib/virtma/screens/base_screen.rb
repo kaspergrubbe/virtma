@@ -3,11 +3,11 @@ module Virtma
     class BaseScreen
       attr_accessor :window_manager, :options
 
-      def initialize
+      def initialize(options)
         @changed = false
         @focused = false
         @window_manager = nil
-        @options = nil
+        @options = options
       end
 
       def menu_title

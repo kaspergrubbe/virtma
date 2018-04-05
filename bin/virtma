@@ -60,10 +60,10 @@ begin
   win.nodelay = true
   win.timeout = 25
 
-  window_manager = Virtma::WindowManager.new(@options, [
-    Virtma::Screens::VmScreen.new,
-    Virtma::Screens::UsbScreen.new,
-    Virtma::Screens::RunScreen.new,
+  window_manager = Virtma::WindowManager.new([
+    Virtma::Screens::VmScreen.new(@options),
+    Virtma::Screens::UsbScreen.new(@options),
+    Virtma::Screens::RunScreen.new(@options),
   ])
   window_manager.redraw(win)
 
