@@ -4,6 +4,12 @@ require 'virtma'
 require 'optparse'
 require 'json'
 
+unless Process.uid == 0
+  puts 'You need to be root'
+  puts '(Psssst! Try using sudo)'
+  exit
+end
+
 @options = {}
 OptionParser.new do |opts|
   opts.banner = 'Usage: virtma [options]'
@@ -29,12 +35,6 @@ end.parse!
 if @options[:configuration].nil?
   puts 'No configuration supplied'
   puts 'Run command again with -c or --config'
-  exit
-end
-
-unless Process.uid == 0
-  puts 'You need to be root'
-  puts '(Psssst! Try using sudo)'
   exit
 end
 
